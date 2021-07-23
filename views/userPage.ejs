@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Twitter / Home</title>
+  </head>
+  <body class="bg-black">
+    <div class="d-flex flex-row container-xl position-relative px-0">
+      <div class=""><%- include('component/left-sidebar') -%></div>
+
+      <div class="d-flex flex-grow-1">
+        <div class="d-flex flex-column flex-grow-1 border border-dark">
+          <div
+            class="
+              sticky-top
+              text-white
+              w-100
+              fs-4
+              fw-bold
+              border-bottom border-dark
+              bg-black
+              px-3
+              py-1
+              d-flex
+              align-items-center
+            "
+          >
+            <a class="post-link fs-8" href="/"
+              ><i class="fas fa-arrow-left"></i
+            ></a>
+            <div class="d-flex flex-column ms-2">
+              <span class="fs-4"><%= userData.firstname %></span>
+              <span class="fs-8 text-white-50 fw-light"
+                ><%= userData.tweets.length %> Tweets</span
+              >
+            </div>
+          </div>
+          <div class="d-flex flex-column border-dark border-bottom">
+            <div
+              class="w-100"
+              style="
+                background-image: url('/img/avatar_img/<%- userData.avatar %>');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                height: 200px;
+              "
+            ></div>
+            <div class="d-flex flex-column position-relative pt-3">
+              <div
+                class="
+                  position-absolute
+                  bg-dark
+                  rounded-circle
+                  border-3 border-dark
+                  mx-3
+                "
+                style="
+                  width: 140px;
+                  height: 140px;
+                  top: -70px;
+                  background-image: url('/img/avatar_img/<%- userData.avatar %>');
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                "
+              ></div>
+              <div class="d-flex w-100 justify-content-end mb-4">
+                <span class="me-3">
+                  <% if (user) { %> <% if (user.id === userData.id) { %>
+                  <button
+                    class="
+                      btn btn-twitter-primary-lined
+                      rounded-pill
+                      fs-8
+                      fw-bold
+                    "
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalProfile"
+                  >
+                    Set up profile
+                  </button>
+                  <!-- Modal profile -->
+                  <div
+                    class="modal fade"
+                    id="modalProfile"
+                    tabindex="-1"
+                    aria-labelledby="modalProfile"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content rounded-4 shadow-none bg-black">
+                        <div
+                          class="
+                            modal-body
+                            bg-black
+                            rounded-4
+                            shadow-none
+                            border-0
+                            d-flex
+                            flex-column
+                            px-5
+                          "
+                        >
+                          <div class="text-center text-white mb-4">
+                            <i class="fab fa-twitter fs-2"></i>
+                          </div>
+                          <div class="fs-4 fw-bold text-white">
+                            Update your profile
+                          </div>
+                          <form
+                            action="/update"
+                            method="POST"
+                            class="d-flex flex-column mt-3"
+                            enctype="multipart/form-data"
+                          >
+                            <label
+                              for="firstname"
+                              class="text-dark position-relative mb-3"
+                              ><span
+                                class="
+                                  position-absolute
+                                  ps-3
+                                  fs-8
+                                  fw-bold
+                                  text-gray
+                                "
+                                style="top: 4px"
+                                >Firstname</span
+                              >
+                              <input
+                                type="text"
+                                name="firstname"
+                                id="firstname"
+                                class="
+                                  no-focus
+                                  rounded-5
+                                  px-3
+                                  pb-2
+                                  pt-4
+                                  w-100
+                                  border-0
+                                "
+                                value="<%- userData.firstname %>"
+                              />
+                            </label>
+                            <label
+                              for="lastname"
+                              class="text-dark position-relative mb-3"
+                              ><span
+                                class="
+                                  position-absolute
+                                  ps-3
+                                  fs-8
+                                  fw-bold
+                                  text-gray
+                                "
+                                style="top: 4px"
+                                >Lastname</span
+                              >
+                              <input
+                                type="text"
+                                name="lastname"
+                                id="lastname"
+                                class="
+                                  no-focus
+                                  rounded-5
+                                  px-3
+                                  pb-2
+                                  pt-4
+                                  w-100
+                                  border-0
+                                "
+                                value="<%- userData.lastname %>"
+                              />
+                            </label>
+                            <label
+                              for="username"
+                              class="text-dark position-relative mb-3"
+                              ><span
+                                class="
+                                  position-absolute
+                                  ps-3
+                                  fs-8
+                                  fw-bold
+                                  text-gray
+                                "
+                                style="top: 4px"
+                                >Username</span
+                              >
+                              <input
+                                type="text"
+                                name="username"
+                                id="username"
+                                class="
+                                  no-focus
+                                  rounded-5
+                                  px-3
+                                  pb-2
+                                  pt-4
+                                  w-100
+                                  border-0
+                                "
+                                value="<%- userData.username %>"
+                              />
+                            </label>
+                            <label
+                              for="email"
+                              class="text-dark position-relative mb-3"
+                              ><span
+                                class="
+                                  position-absolute
+                                  ps-3
+                                  fs-8
+                                  fw-bold
+                                  text-gray
+                                "
+                                style="top: 4px"
+                                >E-mail</span
+                              >
+                              <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                class="
+                                  no-focus
+                                  rounded-5
+                                  px-3
+                                  pb-2
+                                  pt-4
+                                  w-100
+                                  border-0
+                                "
+                                value="<%- userData.email %>"
+                              />
+                            </label>
+                            <label
+                              for="bio"
+                              class="text-dark position-relative mb-3"
+                              ><span
+                                class="
+                                  position-absolute
+                                  mx-1
+                                  ps-2
+                                  fs-8
+                                  fw-bold
+                                  text-gray
+                                  bg-dark
+                                  w-50
+                                  rounded-3
+                                "
+                                style="top: 4px"
+                                >BIO</span
+                              ><!-- prettier-ignore -->
+                              <textarea
+                                name="bio"
+                                id="bio"
+                                cols="30"
+                                rows="3"
+                                class="
+                                  no-focus
+                                  rounded-5
+                                  px-3
+                                  pb-2
+                                  pt-4
+                                  w-100
+                                  border-0
+                                "
+                                
+                              ><%- userData.bio %></textarea
+                              >
+                            </label>
+                            <label
+                              for="avatar"
+                              class="text-dark position-relative mb-3"
+                              ><span
+                                class="
+                                  position-absolute
+                                  ps-3
+                                  fs-8
+                                  fw-bold
+                                  text-gray
+                                "
+                                style="top: 4px"
+                                >Avatar</span
+                              >
+                              <input
+                                type="file"
+                                name="avatar"
+                                id="avatar"
+                                class="
+                                  no-focus
+                                  rounded-5
+                                  px-3
+                                  pb-2
+                                  pt-4
+                                  w-100
+                                  border-0
+                                "
+                                accept="image/png, image/gif, image/jpeg"
+                                multiple="false"
+                              />
+                            </label>
+                            <button
+                              type="submit"
+                              class="btn btn-twitter-primary rounded-5 mb-3"
+                            >
+                              Save
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% } else { %>
+                  <a
+                    href="/follow/<%- userData.id %> "
+                    class="
+                      btn btn-twitter-primary-lined
+                      rounded-pill
+                      fs-8
+                      fw-bold
+                    "
+                  >
+                    Follow
+                  </a>
+                  <% } %> <% } else { %> &nbsp; <% } %>
+                </span>
+              </div>
+              <div class="d-flex flex-column pt-2 mx-3">
+                <span class="text-white fw-bold fs-4"
+                  ><%- userData.firstname %></span
+                >
+                <span class="text-dark">@<%- userData.username %></span>
+              </div>
+              <div class="d-flex flex-column pt-2 mx-3">
+                <span class="text-white"><%- userData.bio %></span>
+              </div>
+              <div class="d-flex flex-column pt-2 mx-3">
+                <span class="text-dark"
+                  ><i class="fal fa-calendar-star"></i> Joined <%-
+                  moment(userData.createdAt).format("LLL") %></span
+                >
+              </div>
+              <div class="d-flex flex-row mt-2 mb-3 mx-3">
+                <div class="fs-8 text-dark">
+                  <span class="text-white fw-bold me-2"
+                    ><%- userData.following.length %></span
+                  >Following
+                </div>
+                <div class="ms-2 fs-8 text-dark">
+                  <span class="text-white fw-bold me-2"
+                    ><%- userData.followers.length %></span
+                  >Followers
+                </div>
+              </div>
+              <div class="d-flex flex-row flex-nowrap">
+                <a
+                  href="/"
+                  class="
+                    flex-grow-1
+                    py-3
+                    link-nav link-active
+                    text-center
+                    fw-bold
+                  "
+                  >Tweets</a
+                >
+                <a
+                  href="/"
+                  class="flex-grow-1 py-3 link-nav text-center fw-bold"
+                  >Tweets & replies</a
+                >
+                <a
+                  href="/"
+                  class="flex-grow-1 py-3 link-nav text-center fw-bold"
+                  >Media</a
+                >
+                <a
+                  href="/"
+                  class="flex-grow-1 py-3 link-nav text-center fw-bold"
+                  >Likes</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <% userData.tweets.forEach(tweet => { %>
+          <div
+            class="
+              d-flex
+              flex-row
+              text-white
+              border-bottom border-dark
+              px-3
+              py-2
+              bg-black
+            "
+          >
+            <img
+              src="/img/avatar_img/<%- userData.avatar %>"
+              class="rounded-circle bg-dark"
+              style="width: 50px; height: 50px"
+              alt="avatar"
+            />
+            <div class="d-flex flex-column ms-3 w-100">
+              <div class="d-flex flex-column bg-black">
+                <div
+                  class="
+                    d-flex
+                    flex-row
+                    text-dark
+                    align-items-center
+                    flex-grow-1
+                    w-100
+                  "
+                >
+                  <div class="w-100 flex-grow-1">
+                    <span class="text-white fw-bold me-1"
+                      ><%- userData.firstname %></span
+                    ><span class="text-dark fs-6"
+                      >@<%- userData.username %> · <%=
+                      moment(tweet.createdAt).locale("en").fromNow(true);
+                      %></span
+                    >
+                  </div>
+                  <div class="dropdown">
+                    <a
+                      href="#"
+                      class="post-opt"
+                      id="dropdownUser2"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      ><i class="far fa-ellipsis-h fs-4"></i
+                    ></a>
+                    <ul
+                      class="
+                        dropdown-menu
+                        bg-black
+                        dropdown-shadow
+                        text-small
+                        myshadow
+                        w-100
+                      "
+                      aria-labelledby="dropdownUser2"
+                    >
+                      <% if (user.id === userData.id) { %>
+                      <li>
+                        <a
+                          class="dropdown-item text-danger"
+                          href="/eliminar/<%= tweet.id %>"
+                          >Delete</a
+                        >
+                      </li>
+                      <% } %>
+                      <li>
+                        <a
+                          class="dropdown-item text-twitter"
+                          href="/follow/<%= userData.id %>"
+                          >Follow</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="fw-light w-100"><%= tweet.content %></div>
+              </div>
+
+              <div
+                class="
+                  d-flex
+                  flex-row
+                  align-items-center
+                  justify-content-between
+                  flex-fill
+                "
+              >
+                <a
+                  href="/"
+                  class="link-comment d-flex flex-row align-items-center"
+                  ><i class="fal fa-comment"></i
+                  ><span class="ms-1 fs-8">0</span></a
+                >
+                <a
+                  href="/"
+                  class="link-retweet d-flex flex-row align-items-center"
+                  ><i class="fal fa-retweet"></i
+                  ><span class="ms-1 fs-8">0</span></a
+                >
+                <a
+                  href="/like/<%- tweet.id %> "
+                  class="link-like d-flex flex-row align-items-center"
+                  ><i class="fal fa-heart"></i
+                  ><span class="ms-1 fs-8"><%= tweet.likes.length %></span></a
+                >
+                <a
+                  href="/"
+                  class="
+                    link-share
+                    d-flex
+                    flex-row
+                    align-items-center
+                    d-none d-md-block
+                  "
+                  ><i class="fal fa-share-square"></i
+                ></a>
+                <div class="">&nbsp;</div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class=""><%- include('component/right-sidebar') -%></div>
+    </div>
+    <script src="/js/main.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
