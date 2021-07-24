@@ -28,7 +28,7 @@ async function update(req, res) {
       username: fields.username,
       email: fields.email,
       bio: fields.bio,
-      avatar: fileName,
+      avatar: `/img/avatar_img/${fileName}`,
     });
     res.redirect(`/${fields.username}`);
   });

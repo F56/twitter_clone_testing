@@ -5,7 +5,7 @@ module.exports = async () => {
   const userList = await User.find();
   const tweets = [];
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 15; i++) {
     const user = userList[Math.floor(Math.random() * userList.length)];
     const tweet = new Tweet({
       user: user,

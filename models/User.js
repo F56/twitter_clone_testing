@@ -10,7 +10,7 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     bio: { type: String, required: false },
-    avatar: { type: String, required: false, default: "default_avatar.png" },
+    avatar: { type: String, required: false, default: "/img/avatar_img/default_avatar.png" },
     followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
     tweets: [{ type: Schema.Types.ObjectId, ref: "Tweet" }],

@@ -7,7 +7,7 @@ module.exports = async () => {
 
   const password = await bcrypt.hash("hola", 10);
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 20; i++) {
     const user = new User({
       firstname: faker.name.firstName(),
       lastname: faker.name.lastName(),
@@ -15,6 +15,7 @@ module.exports = async () => {
       username: faker.internet.userName(),
       password: password,
       bio: faker.lorem.lines(2),
+      avatar: faker.internet.avatar(),
       createdAt: Date.now(),
     });
     userList.push(user);

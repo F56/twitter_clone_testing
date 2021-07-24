@@ -22,7 +22,12 @@
   </head>
   <body class="bg-black">
     <div class="d-flex flex-row container-xl position-relative px-0">
-      <div class=""><%- include('component/left-sidebar') -%></div>
+      <% if (user) { %>
+      <%- include('component/modal-tweet') %>
+      <% } %>
+        <div class=""><%- include('component/left-sidebar') -%></div>
+      
+      
 
       <div class="d-flex flex-grow-1">
         <div class="d-flex flex-column flex-grow-1 border border-dark">
@@ -55,7 +60,7 @@
             <div
               class="w-100"
               style="
-                background-image: url('/img/avatar_img/<%- userData.avatar %>');
+                background-image: url('<%- userData.avatar %>');
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -75,10 +80,11 @@
                   width: 140px;
                   height: 140px;
                   top: -70px;
-                  background-image: url('/img/avatar_img/<%- userData.avatar %>');
+                  background-image: url('<%- userData.avatar %>');
                   background-position: center;
                   background-repeat: no-repeat;
                   background-size: cover;
+                  border: solid 3px black;
                 "
               ></div>
               <div class="d-flex w-100 justify-content-end mb-4">
@@ -339,7 +345,9 @@
                       fw-bold
                     "
                   >
-                    Follow
+                  <% if (user.following.some(following => following.toString() === userData.id)) { %>
+                    Unfollow
+                   <% } else { %> Follow <% } %>
                   </a>
                   <% } %> <% } else { %> &nbsp; <% } %>
                 </span>
@@ -356,7 +364,7 @@
               <div class="d-flex flex-column pt-2 mx-3">
                 <span class="text-dark"
                   ><i class="fal fa-calendar-star"></i> Joined <%-
-                  moment(userData.createdAt).format("LLL") %></span
+                  moment(userData.createdAt).locale('en').fromNow() %></span
                 >
               </div>
               <div class="d-flex flex-row mt-2 mb-3 mx-3">
@@ -415,7 +423,7 @@
             "
           >
             <img
-              src="/img/avatar_img/<%- userData.avatar %>"
+              src="<%- userData.avatar %>"
               class="rounded-circle bg-dark"
               style="width: 50px; height: 50px"
               alt="avatar"
@@ -441,44 +449,48 @@
                       %></span
                     >
                   </div>
-                  <div class="dropdown">
-                    <a
-                      href="#"
-                      class="post-opt"
-                      id="dropdownUser2"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      ><i class="far fa-ellipsis-h fs-4"></i
-                    ></a>
-                    <ul
-                      class="
-                        dropdown-menu
-                        bg-black
-                        dropdown-shadow
-                        text-small
-                        myshadow
-                        w-100
-                      "
-                      aria-labelledby="dropdownUser2"
-                    >
-                      <% if (user.id === userData.id) { %>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/eliminar/<%= tweet.id %>"
-                          >Delete</a
-                        >
-                      </li>
-                      <% } %>
-                      <li>
-                        <a
-                          class="dropdown-item text-twitter"
-                          href="/follow/<%= userData.id %>"
-                          >Follow</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
+                  <% if (user) { %>
+                    <div class="dropdown">
+                      <a
+                        href="#"
+                        class="post-opt"
+                        id="dropdownUser2"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="far fa-ellipsis-h fs-4"></i
+                      ></a>
+                      <div
+                        class="
+                          dropdown-menu
+                          rounded-6
+                          bg-black
+                          border border-dark
+                          my-0
+                          py-0
+                        "
+                        aria-labelledby="dropdownUser2"
+                      >
+                        <div class="d-flex flex-column">
+                          <% if (user.id === userData.id) { %>
+                          <a
+                            href="/eliminar/<%= tweet.id %>"
+                            class="border-dark p-3 text-danger"
+                            >Delete</a
+                          >
+                          <% } else { %>
+                          <a
+                            href="/follow/<%= userData.id %>"
+                            class="border-dark p-3 text-dark"
+                            ><% if (user.following.some(following => following.toString() === userData.id)) { %>
+                              Unfollow
+                             <% } else { %> Follow <% } %></a
+                          >
+                          <% } %>
+                        </div>
+                      </div>
+                    </div>
+                  <% } %>
+                  
                 </div>
                 <div class="fw-light w-100"><%= tweet.content %></div>
               </div>
@@ -507,9 +519,16 @@
                 <a
                   href="/like/<%- tweet.id %> "
                   class="link-like d-flex flex-row align-items-center"
-                  ><i class="fal fa-heart"></i
-                  ><span class="ms-1 fs-8"><%= tweet.likes.length %></span></a
-                >
+                  ><% if (user) { %>
+                    <% if(tweet.likes.some(userlike => userlike.toString() ===
+                    user.id)) { %> <i class="fas fa-heart text-danger"></i><span class="ms-1 fs-8 text-danger"
+                      ><%= tweet.likes.length %></span>
+                    <% } else { %> <i class="fal fa-heart"></i><span class="ms-1 fs-8"><%= tweet.likes.length %></span>
+                    <% } %>
+                  <% } else { %>
+                    <i class="fal fa-heart"></i><span class="ms-1 fs-8"><%= tweet.likes.length %></span>
+                    <% } %>
+                    </a>
                 <a
                   href="/"
                   class="

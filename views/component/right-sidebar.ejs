@@ -1,65 +1,87 @@
-<div class="d-none d-lg-block" style="width: 380px">
-  <div class="sticky-top bg-black">
-    <form action="#" aria-label="Buscar en Twitter" role="search">
-      <div class="mx-4 py-1">
-        <div
-          class="
-            d-flex
-            flex-row
-            bg-dark
-            border border-dark
-            rounded-pill
-            align-items-center
-            text-white
-            py-2
-            px-3
-          "
-        >
-          <i class="fal fa-search me-2"></i>
-          <input
-            class="border-0 bg-dark w-100"
-            type="text"
-            placeholder="Search Twitter"
-          />
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="m-4">
-    <div class="py-2 px-3 list-group-item-dark roundedTop fs-5 sidebarColor fw-bold">
-      You might like
-    </div>
-    <div class="list-group rounded-0">
-      <div
-        
-        class="
-          list-group-item list-group-item-dark
-          d-flex
-          align-items-center
-          sidebarColor
-          borderBottom
-        "
-      >
-        
-          <img
-            src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
-            alt=""
-            width="50"
-            height="50"
-            class="rounded-circle"
-          />
-          <div class="d-flex flex-column flex-grow-1 ms-3">
-            <span class="fw-bold">User</span>
-            <span class="text-dark">@User</span>
-          </div>
-        
-        <a type="button" class="btn btn-twitter-primary-lined rounded-pill px-3 py-1 fw-bold">
-          Follow
-        </a></div
-      >
-    </div>
-    <div class="py-3 px-3 list-group-item-dark roundedBottom sidebarColor">
-      <a href="" class="text-twitter">Show more</a>
-    </div>
+<div
+  class="d-none d-lg-flex flex-column bg-black sticky-top px-4 py-2"
+  style="width: 380px; z-index: 3"
+>
+  <div
+    class="
+      bg-dark
+      border-0
+      d-flex
+      flex-row
+      rounded-pill
+      align-items-center
+      px-3
+    "
+  >
+    <label for="search" class="ms-1">
+      <i class="fal fa-search text-dark"></i>
+    </label>
+    <input
+      type="text"
+      name="search"
+      id="search"
+      class="no-focus bg-transparent w-100 border-0 ms-3 py-2"
+      placeholder="Search Twitter"
+    />
   </div>
 </div>
+
+<% if (user) { %>
+  <div
+  class="d-none d-lg-flex flex-column bg-black sticky-top px-4 py-2 vh-50"
+  style="width: 380px; z-index: 1"
+>
+  <div class="d-flex flex-column bg-dark-two rounded-5 border border-dark">
+    <div
+      class="w-100 text-white px-3 py-2 fs-5 fw-bold border-bottom border-dark"
+    >
+      You might like
+    </div>
+    <!-- User Feed -->
+    <% userList.forEach(user => { %>
+    <div
+      onclick=''
+      class="
+        w-100
+        text-white
+        px-3
+        py-2
+        border-bottom border-dark
+        d-flex
+        flex-row
+        align-items-center
+      "
+      ><a
+      href="/<%- user.username %>"
+        class="rounded-pill p-4 bg-dark"
+        style="
+          background-image: url('<%- user.avatar %>');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+        "
+      ></a>
+      <a href="/<%- user.username %>" class="d-flex flex-column ms-2 flex-fill">
+        <span class="text-white fw-bold"><%- user.firstname %></span
+        ><span class="text-dark">@<%- user.username %></span>
+        </a>
+      <a href="/follow/<%- user.id %>" class="btn btn-twitter-primary-lined rounded-pill fs-6 fw-bold">
+        Follow
+      </a>
+    </div>
+    <% }) %>
+    <div class="w-100 text-twitter px-3 py-3 fs-6">Show more</div>
+  </div>
+  <span class="text-dark fs-8 mt-4"> &copy; Twitter - 2021 </span>
+</div>
+<% } else { %>
+  <div
+  class="d-none d-lg-flex flex-column bg-black sticky-top px-4 py-2 vh-50"
+  style="width: 380px; z-index: 1"
+>
+  <div class="w-100 text-white fs-4 text-center">Aren't you register yet?</div>
+  <div class="w-100 text-dark fs-5 text-center">Register now to star enjoining all the features of Twitter.</div>
+  <div class="w-100 text-center mt-3 d-flex flex-column align-items-center justify-content-center"><a href="/signup" class="btn btn-twitter-primary rounded-pill px-4">Sign up</a> <span class="position-relative border-bottom border-dark w-100 my-4"><span class="text-dark text-center bg-black position-absolute" style="right: 50%; left: 50%; top: -1rem;">or</span> </span><a href="/login" class="btn btn-twitter-primary-lined rounded-pill px-4">Log in</a></div>
+</div>
+<% } %> 
+
